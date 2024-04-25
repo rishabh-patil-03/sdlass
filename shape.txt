@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shape Area Calculator</title>
+</head>
+<body>
+    <h2>Shape Area Calculator</h2>
+    <form action="calculate.php" method="post">
+        <h3>Circle</h3>
+        <label for="circle_radius">Radius:</label><br>
+        <input type="number" id="circle_radius" name="circle_radius"><br><br>
+
+        <h3>Triangle</h3>
+        <label for="triangle_base">Base:</label><br>
+        <input type="number" id="triangle_base" name="triangle_base"><br>
+        <label for="triangle_height">Height:</label><br>
+        <input type="number" id="triangle_height" name="triangle_height"><br><br>
+
+        <h3>Square</h3>
+        <label for="square_side">Side:</label><br>
+        <input type="number" id="square_side" name="square_side"><br><br>
+
+        <input type="submit" value="Calculate">
+    </form>
+</body>
+</html>
+
+<?php
+// Include the classes
+require_once 'shapes.php';
+
+// Get form inputs
+$circle_radius = $_POST['circle_radius'];
+$triangle_base = $_POST['triangle_base'];
+$triangle_height = $_POST['triangle_height'];
+$square_side = $_POST['square_side'];
+
+// Create objects
+$circle = new Circle($circle_radius);
+$triangle = new Triangle($triangle_base, $triangle_height);
+$square = new Square($square_side);
+
+// Calculate areas
+$circle_area = $circle->calculateArea();
+$triangle_area = $triangle->calculateArea();
+$square_area = $square->calculateArea();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shape Area Results</title>
+</head>
+<body>
+    <h2>Shape Area Results</h2>
+    <h3>Circle</h3>
+    <p>Radius: <?php echo $circle_radius; ?></p>
+    <p>Area: <?php echo $circle_area; ?></p>
+
+    <h3>Triangle</h3>
+    <p>Base: <?php echo $triangle_base; ?></p>
+    <p>Height: <?php echo $triangle_height; ?></p>
+    <p>Area: <?php echo $triangle_area; ?></p>
+
+    <h3>Square</h3>
+    <p>Side: <?php echo $square_side; ?></p>
+    <p>Area: <?php echo $square_area; ?></p>
+</body>
+</html>
+
+<?php
+// shapes.php
+
+// Parent class
+class Shape {
+    // Common properties and methods can be defined here
+}
+
+// Child class for Circle
+class Circle extends Shape {
+    private $radius;
+
+    public function __construct($radius) {
+        $this->radius = $radius;
+    }
+
+    public function calculateArea() {
+        return pi() * $this->radius * $this->radius;
+    }
+}
+
+// Child class for Triangle
+class Triangle extends Shape {
+    private $base;
+    private $height;
+
+    public function __construct($base, $height) {
+        $this->base = $base;
+        $this->height = $height;
+    }
+
+    public function calculateArea() {
+        return 0.5 * $this->base * $this->height;
+    }
+}
+
+// Child class for Square
+class Square extends Shape {
+    private $side;
+
+    public function __construct($side) {
+        $this->side = $side;
+    }
+
+    public function calculateArea() {
+        return $this->side * $this->side;
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scientific Calculator</title>
+    <script>
+        function insert(num) {
+            document.getElementById('display').value += num;
+        }
+
+        function equal() {
+            var exp = document.getElementById('display').value;
+            if (exp) {
+                document.getElementById('display').value = eval(exp);
+            }
+        }
+
+        function clean() {
+            document.getElementById('display').value = '';
+        }
+
+        function back() {
+            var exp = document.getElementById('display').value;
+            document.getElementById('display').value = exp.substring(0, exp.length - 1);
+        }
+
+        function logarithm() {
+            var value = document.getElementById('display').value;
+            var result = Math.log10(parseFloat(value));
+            document.getElementById('display').value = result;
+        }
+    </script>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td colspan="4">
+                <input type="text" id="display" readonly>
+            </td>
+        </tr>
+        <tr>
+            <td><button onclick="insert('7')">7</button></td>
+            <td><button onclick="insert('8')">8</button></td>
+            <td><button onclick="insert('9')">9</button></td>
+            <td><button onclick="insert('/')">/</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="insert('4')">4</button></td>
+            <td><button onclick="insert('5')">5</button></td>
+            <td><button onclick="insert('6')">6</button></td>
+            <td><button onclick="insert('*')">*</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="insert('1')">1</button></td>
+            <td><button onclick="insert('2')">2</button></td>
+            <td><button onclick="insert('3')">3</button></td>
+            <td><button onclick="insert('-')">-</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="insert('0')">0</button></td>
+            <td><button onclick="insert('.')">.</button></td>
+            <td><button onclick="equal()">=</button></td>
+            <td><button onclick="insert('+')">+</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="clean()">C</button></td>
+            <td><button onclick="back()">←</button></td>
+            <td><button onclick="logarithm()">log</button></td>
+            <td><button onclick="insert('(')">(</button></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button onclick="insert(')')">)</button></td>
+            <td><button onclick="insert('**')">^</button></td>
+            <td><button onclick="insert('Math.sqrt(')">√</button></td>
+        </tr>
+    </table>
+</body>
+</html>

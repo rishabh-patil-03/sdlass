@@ -1,0 +1,486 @@
+field level validation
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<style>
+    .error {
+        color: red;
+    }
+</style>
+</head>
+<body>
+<h2>Registration Form</h2>
+<form id="registrationForm">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" onchange="validateUsername()"><br>
+    <span id="usernameError" class="error"></span><br>
+    
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" onchange="validateEmail()"><br>
+    <span id="emailError" class="error"></span><br>
+    
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" onchange="validatePassword()"><br>
+    <span id="passwordError" class="error"></span><br>
+    
+    <input type="submit" value="Submit" id="submit" disabled>
+</form>
+
+<script src="index.js"></script>
+</body>
+</html>
+
+
+
+index.js
+
+
+// Field-level validation functions
+function validateUsername() {
+    var username = document.getElementById("username").value.trim();
+    var usernameError = document.getElementById("usernameError");
+    
+    if (username === "") {
+        usernameError.innerHTML = "Username is required";
+    } else if (username.length < 7) {
+        usernameError.innerHTML = "Username should be of minimum 7 characters";
+    } else {
+        usernameError.innerHTML = "";
+    }
+
+    enableSubmitButton();
+}
+
+function validateEmail() {
+    var email = document.getElementById("email").value.trim();
+    var emailError = document.getElementById("emailError");
+    
+    if (email === "") {
+        emailError.innerHTML = "Email is required";
+    } else if (!isValidEmail(email)) {
+        emailError.innerHTML = "Invalid email format";
+    } else {
+        emailError.innerHTML = "";
+    }
+    enableSubmitButton();
+}
+
+function validatePassword() {
+    var password = document.getElementById("password").value.trim();
+    var passwordError = document.getElementById("passwordError");
+    
+    if (password === "") {
+        passwordError.innerHTML = "Password is required";
+    } else if (password.length < 8) {
+        passwordError.innerHTML = "Password should be of minimum 8 characters";
+    } else {
+        passwordError.innerHTML = "";
+    }
+
+    enableSubmitButton();
+}
+
+// Enable submit button only if all fields are valid
+function enableSubmitButton() {
+    var username = document.getElementById("username").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var password = document.getElementById("password").value.trim();
+    var submitButton = document.getElementById("submit");
+    
+    if (username !== "" && email !== "" && password !== "") {
+        submitButton.disabled = false;
+        submitButton.addEventListener("click",()=>{
+            alert("form submitted successfully!\n Welcome "+username);
+        })
+    } else {
+        submitButton.disabled = true;
+    }
+}
+
+// Email format validation function
+function isValidEmail(email) {
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+
+fibonacci
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fibonacci series</title>
+    <style>
+        /* ul {
+            list-style-type: none;
+        }
+        li{
+            display: inline;
+        }
+        #order{
+            display: inline;
+            margin: 0;
+            padding: 0;
+        } */
+
+    </style>
+</head>
+<body>
+
+    <h4>enter the number till that fibonacci series should print : </h4>
+    <input type="number" placeholder="enter number " id="fiboInput">
+    <input type="submit" value="submit" onclick="printFibo()" >
+    <br><br>
+    <h3>fibonacci series : </h3>
+    <h5 id="display"></h5>
+    
+
+    <script>
+
+        const printFibo = () => {
+
+            let input = document.getElementById("fiboInput").value
+            let order = document.getElementById("display")
+
+            let ans = "";
+            var len = input
+
+            //console.log(input + " "+input)
+
+            let a = 1,b=1
+
+            if(input == 1){
+                ans += "1 "
+            }else{
+                ans += "1 1 "
+            }
+
+            for(var i = 2; i<input; i++){
+                let sum = a+b
+                ans += sum
+                ans+=" "
+                a = b
+                b = sum
+            }
+
+            order.innerHTML = ans
+        }
+
+    </script>
+
+</body>
+</html>
+
+calculator
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta na9me="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Calculator</title>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <input type="text" id="inputBox" value="0" >
+        </div>
+        <div>
+            <button type="button" onclick="buttonClicked(this)" class="opr ">AC</button>
+            <button type="button" onclick="buttonClicked(this)" class="opr">DEL</button>
+            <button type="button" onclick="buttonClicked(this)" class="opr">%</button>
+            <button type="button" onclick="buttonClicked(this)" class="opr">/</button>
+        </div>
+        <div>
+            <button type="button" onclick="buttonClicked(this)" >7</button>
+            <button type="button" onclick="buttonClicked(this)" >8</button>
+            <button type="button" onclick="buttonClicked(this)" >9</button>
+            <button type="button" onclick="buttonClicked(this)" class="opr">*</button>
+        </div>
+        <div>
+            <button type="button" onclick="buttonClicked(this)" >4</button>
+            <button type="button" onclick="buttonClicked(this)" >5</button>
+            <button type="button" onclick="buttonClicked(this)" >6</button>
+            <button type="button" onclick="buttonClicked(this)" class="opr">+</button>
+        </div>
+        <div>
+            <button type="button" onclick="buttonClicked(this)" >1</button>
+            <button type="button" onclick="buttonClicked(this)" >2</button>
+            <button type="button" onclick="buttonClicked(this)" >3</button>
+            <button type="button" onclick="buttonClicked(this)" class="opr">-</button>
+        </div>
+        <div>
+            <button type="button" onclick="buttonClicked(this)" class="" id="plusMinus">&#xB1;</button>
+            <button type="button" onclick="buttonClicked(this)" >0</button>
+            <button type="button" onclick="buttonClicked(this)" >.</button>
+            <button type="button" onclick="buttonClicked(this)" id="eqBtn" style="background-color: rgb(178, 28, 28);">=</button>
+        </div>
+        
+    </div>
+
+index.js
+
+ var inputBox = document.getElementById("inputBox");
+
+            var buttons = document.querySelectorAll("button");
+            var str = '';
+
+        
+            const buttonClicked = (b)=>{
+
+            //document.querySelectorAll("button")[i].classList.toggle("pressed"); 
+                if(b.innerHTML=="="){
+                    // str = String(eval(str));
+                    str = String(eval(str))
+                    inputBox.value = str;
+                }
+                else if(b.innerHTML=="DEL"){
+                    if(inputBox.value.length!=1){
+                        str= str.substring(0,str.length-1);
+                        inputBox.value=str;
+                    }
+                    else{
+                        str='';
+                        inputBox.value='0';
+                    }
+                }
+                else if(b.innerHTML=="AC"){
+                    str= '';
+                    inputBox.value='0';
+                }
+                else if(b.innerHTML=="plusMinus"){
+                    str= String(-eval(str));
+                    inputBox.value=str;
+                }
+                else{
+                    str += b.innerHTML;
+                    inputBox.value =str;
+                }
+                
+            }
+
+submit level validation
+
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<style>
+    .error {
+        color: red;
+    }
+</style>
+</head>
+<body>
+<h2>Registration Form</h2>
+
+<form id="registrationForm">
+    
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <span id="usernameError" class="error"></span><br>
+    
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <span id="emailError" class="error"></span><br>
+    
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <span id="passwordError" class="error"></span><br>
+    
+    <input type="submit" value="Submit">
+
+</form>
+
+<script src="index.js">
+
+</script>
+</body>
+</html>
+
+
+index.js
+
+    document.getElementById("registrationForm").addEventListener("submit", (event)=> {
+
+        event.preventDefault(); // Prevent default form submission
+        
+        // Fetching input values
+        var username = document.getElementById("username").value;
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        
+        // Resetting previous error messages
+        document.getElementById("usernameError").innerHTML = "";
+        document.getElementById("emailError").innerHTML = "";
+        document.getElementById("passwordError").innerHTML = "";
+        
+        // Username validation
+        if (username.trim() === "") {
+            document.getElementById("usernameError").innerHTML = "Username is required";
+            return;
+        }else if(username.trim().length < 7 ) {
+            document.getElementById("usernameError").innerHTML = "Username should be of min 7 character";
+            return;
+        }
+        
+        // Email validation
+        if (email.trim() === "") {
+            document.getElementById("emailError").innerHTML = "Email is required";
+            return;
+        } else if (!isValidEmail(email)) {
+            document.getElementById("emailError").innerHTML = "Invalid email format";
+            return;
+        }
+        
+        // Password validation
+        if (password.trim() === "") {
+            document.getElementById("passwordError").innerHTML = "Password is required";
+            return;
+        }
+        else if(password.trim().length < 8 ) {
+            document.getElementById("passwordError").innerHTML = "pasword should be of min 8 character";
+            return;
+        }
+        
+        // Form submission allowed if all validations pass
+        // Here you can proceed with form submission to server
+        alert("Form submitted successfully! \n Welcome "+username);
+        
+    });
+
+    // Email format validation function
+    function isValidEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+assignment feed and fetch in mysql with id verification 
+
+
+    
+<?php 
+    
+    $conn = new mysqli("localhost", "root", "", "students_details");
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $id = $_POST["id"];
+        $name = $_POST["name"];
+        $password = $_POST["password"];
+
+        // Check if the ID already exists
+        $qcheck = "SELECT * FROM students WHERE id = $id;";
+        $result = $conn->query($qcheck);
+
+        if ($result->num_rows > 0) {
+            echo "ID already exists. Please choose a different ID.<br>";
+            echo "<button onclick = \"goBack()\"> go back to regstration form</button>";
+        } else {
+            // Insert new record if ID doesn't exist
+            $q = "INSERT INTO students VALUES ($id, '$name', '$password')";
+            if ($conn->query($q) === TRUE) {
+                echo "New record created successfully!";
+            } else {
+                echo "Error: " . $q . "<br>" . $conn->error;
+            }
+
+            // Display existing records
+            $qa = "SELECT * FROM students";
+            $data = $conn->query($qa);
+            
+            while ($row = $data->fetch_assoc()) {
+                echo "ID: " . $row["id"] . "   Name: " . $row["name"] . "   Password: " . $row["password"] . "<br>"; 
+            }
+
+            echo "<br> Data fetched successfully!<br>";
+
+        }
+
+    }
+
+?>
+
+<script>
+   function goBack () {
+    window.location.href = "index.html";
+   }
+</script>
+
+
+assignment feed and fetch in mysql
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sdl</title>
+</head>
+<body>
+
+    <form action="index1.php" method="post">
+
+        <input type="number" placeholder="id" name="id" required> <br />
+        <input type="text" placeholder="name" name="name" required> <br />
+        <input type="text" placeholder="email" name="email" required> <br />
+        <input type="submit" value="submit">
+
+    </form>
+
+</body>
+</html>
+
+
+index.php
+
+<?php 
+    
+    $conn = new mysqli("localhost","root","","employee_details");
+
+    if($_SERVER["REQUEST_METHOD"]=="POST"){
+
+        $id = $_POST["id"];
+        $name = $_POST["name"];
+        $email = $_POST["email"];
+
+        $q = "insert into employee values ($id,'$name','$email');";
+        $conn->query($q);
+
+        $qa = "select * from employee;";
+        $data = $conn->query($qa);
+
+        while($row = $data->fetch_assoc()){
+            echo "id : ".$row["id"]."   name : ".$row["name"]."     email : ".$row["email"]."   <br>"; 
+        }
+
+        echo "<br> data feed successfully!"."<br>";
+
+        // echo "entered details by user are : ";
+        // // echo $id."  ".$name. "  ".$email;
+        // echo "id : ".$id."<br>";
+        // echo "name : ".$name."<br>";
+        // echo "email : ".$email."<br>";
+
+    }
+
+?>
+
